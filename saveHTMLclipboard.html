@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta charset="UTF-8">
+	<title>saveHTMLclipboard</title>
+	<style>
+		html, body, ul {padding: 0; margin: 5px;}
+		h2 {text-align: center;}
+		body {
+			background-image: url('data:image/svg+xml;UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"%3E%3Crect stroke-width="0" x="7" y="7" width="2" height="2" fill="%238888" /%3E%3C/svg%3E');
+			background-repeat: repeat;
+		}
+		.cliparea {width: 90%; margin: auto;}
+		.cliparea div {padding: 5px;}
+		#clip {position: relative; height: 400px; overflow-y: scroll; border: 1px dotted #444; border-radius: 5px; background-color: #eee;}
+		.buttonarea {width: max-content; margin: auto; padding: 25px;}
+		.buttonarea button {
+			display: inline-block; min-width: 140px; 
+			margin: 5px 0; padding: 10px 0; cursor: pointer; 
+			color: #101071; background-color: #eee; 
+			border: 1px solid #101071; border-radius: 5px; 
+			font-size: 18px; text-align: center; text-decoration: none;
+			transition: all .15s ease-in-out;
+		}
+		.buttonarea button:hover {
+			box-shadow: 0 0 0 3px #1010713f;
+			outline-width: 0px; outline-color: #101071; font-weight: bold;
+		}
+	</style>
+	<script>
+/*
+	MIT License
+
+	Copyright (c) 2023 RannerDesign
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+*/
+	function clearclip() {
+		const clip = document.getElementById('clip');
+		clip.innerHTML = '';
+	}
+	function saveclip() {
+		const clip = document.getElementById('clip');
+		save_file_via_download(clip.innerHTML, 'clipboard.html', 'text/HTML');
+	}
+//	Write file using download mechanism
+	function save_file_via_download(content, fileName, contentType) {
+		const a = document.createElement('a');
+		const data = new Blob([content], { type: contentType});
+		a.href = URL.createObjectURL(data);
+		a.download = fileName;
+		document.body.appendChild(a);
+		a.click();
+	}
+	</script>
+</head>
+<body>
+<h2>Save Clipboard in HTML Format</h2>
+<div class="buttonarea">
+	<button type="button" onclick="clearclip();">Clear</button>
+	<button type="button" onclick="saveclip();">Save</button>
+</div>
+<div class="cliparea">
+	<div>Paste clipboard into area with dotted border</div>
+	<div id="clip" contenteditable></div>
+</div>
+</body>
+</html>
